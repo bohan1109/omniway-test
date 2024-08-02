@@ -25,4 +25,14 @@ const loginUserController = async (req: Request, res: Response) => {
     }
 };
 
-export default {registerUserController,loginUserController};
+const refreshTokenController = async (req: Request, res: Response) => {
+    const { refreshToken } = req.body;
+    try {
+        const { token } = await userService.refreshToken(refreshToken);
+        res.status(200).json({ token });
+    } catch (error: any) {
+        res.status(401).json({ message: error.message });
+    }
+};
+
+export default {registerUserController,loginUserController,refreshTokenController};

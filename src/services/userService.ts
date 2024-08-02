@@ -34,4 +34,14 @@ const authenticateUser = async (username: string, password: string) => {
         throw new Error('Authentication failed');
     }
 };
-export default {registerUser,authenticateUser};
+
+const refreshToken = async (refreshToken: string) => {
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET!) as { id: string };
+        const token = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET!, { expiresIn: '2m' });
+        return { token };
+    } catch (error) {
+        throw new Error('Invalid or expired refresh token');
+    }
+};
+export default {registerUser,authenticateUser,refreshToken};

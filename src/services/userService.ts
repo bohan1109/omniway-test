@@ -44,4 +44,26 @@ const refreshToken = async (refreshToken: string) => {
         throw new Error('Invalid or expired refresh token');
     }
 };
-export default {registerUser,authenticateUser,refreshToken};
+
+const changePassword = async (userId: string, newPassword: string) => {
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.password = newPassword;
+        await user.save();
+
+        return user.username;
+    } catch (error) {
+        throw new Error('Password change failed');
+    }
+};
+
+export default {
+    registerUser,
+    authenticateUser,
+    refreshToken,
+    changePassword,
+};

@@ -54,9 +54,15 @@ const changePasswordController = async (req: Request, res: Response) => {
     }
 };
 
+const dummyDataController = (req: Request, res: Response) => {
+    const user = (req as any).user;
+    res.status(200).json({  user: { id: user.id, username: user.username } });
+};
+
 export default {
     registerUserController,
     loginUserController,
     refreshTokenController,
-    changePasswordController
+    changePasswordController,
+    dummyDataController
 };

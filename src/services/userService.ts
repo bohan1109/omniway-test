@@ -26,8 +26,8 @@ const authenticateUser = async (username: string, password: string) => {
             return null;
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: '2m' });
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: '5m' });
+        const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET!, { expiresIn: '2m' });
+        const refreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET!, { expiresIn: '5m' });
 
         return { token, refreshToken };
     } catch (error) {
